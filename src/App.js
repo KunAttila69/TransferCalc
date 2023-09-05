@@ -4,14 +4,17 @@ function App() {
   const [capacity, setCapacity] = useState()
   const [capacityUnit, setCapacityUnit] = useState(1)
   const [transferSpeed, setTransferSpeed] = useState()
-  const [speedUnit, setSpeedUnit] = useState(Math.pow(1000,1)*8)
+  const [speedUnit, setSpeedUnit] = useState(Math.pow(1000,0)/8)
   const [time, setTime] = useState()
   
-  const capacityUnits = [{"name":"MegaByte","value":1},{"name":"GigaByte","value":Math.pow(1000,-1)},{"name":"TeraByte","value":Math.pow(1000,-2)}]
-  const speedUnits = [{"name":"mb/s","value":Math.pow(1000,1)*8},{"name":"KB/s","value":Math.pow(1000,1)},{"name":"MB/s","value":1},{"name":"GB/s","value":Math.pow(1000,-1)}]
+  const capacityUnits = [{"name":"MegaByte","value":1},{"name":"GigaByte","value":Math.pow(1000,1)},{"name":"TeraByte","value":Math.pow(1000,2)}]
+  const speedUnits = [{"name":"mb/s","value":Math.pow(1000,0)/8},{"name":"KB/s","value":Math.pow(1000,-1)},{"name":"MB/s","value":1},{"name":"GB/s","value":Math.pow(1000,2)}]
 
   const Calculate = () => {
-    setTime(capacity*capacityUnit/transferSpeed*speedUnit)
+    console.log(capacityUnit)
+    console.log(speedUnit)
+    console.log(transferSpeed, speedUnit)
+    setTime((capacity*capacityUnit)/(transferSpeed*speedUnit))
   }
 
   return (
