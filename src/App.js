@@ -2,27 +2,16 @@ import { useState } from "react";
 
 function App() {
   const [capacity, setCapacity] = useState()
-  const [capacityUnit, setCapacityUnit] = useState()
+  const [capacityUnit, setCapacityUnit] = useState(1)
   const [transferSpeed, setTransferSpeed] = useState()
-  const [speedUnit, setSpeedUnit] = useState()
+  const [speedUnit, setSpeedUnit] = useState(Math.pow(1000,1)*8)
   const [time, setTime] = useState()
   
-  const capacityUnits = ["MegaByte","GigaByte","TeraByte"]
-  const speedUnits = ["mb/s","KB/s","MB/s","GB/s"]
+  const capacityUnits = [{"name":"MegaByte","value":1},{"name":"GigaByte","value":Math.pow(1000,-1)},{"name":"TeraByte","value":Math.pow(1000,-2)}]
+  const speedUnits = [{"name":"mb/s","value":Math.pow(1000,1)*8},{"name":"KB/s","value":Math.pow(1000,1)},{"name":"MB/s","value":1},{"name":"GB/s","value":Math.pow(1000,-1)}]
 
   const Calculate = () => {
-    setTime(0)
-    const capacityValue = Math.abs(capacity)               * Math.pow(1000,capacityUnits.indexOf(capacityUnit)+1)
-    
-    const speedDifference = Math.abs(2-speedUnits.indexOf(speedUnit))
-    let speedValue
-    if(speedDifference === 2){
-      speedValue = 8*1000
-    }
-    else{
-      speedValue = Math.pow(1000,speedDifference)
-    }
-    setTime(capacityValue/transferSpeed*speedValue)
+    setTime(capacity*capacityUnit/transferSpeed*speedUnit)
   }
 
   return (
@@ -33,7 +22,7 @@ function App() {
           <input type="number" min="1" onChange={(e)=>setCapacity(e.target.value)}/>
           <select name="capacity-unit" id="capacity-unit" onChange={(e)=>setCapacityUnit(e.target.value)}>
             {capacityUnits.map((unit)=>{
-              return <option key={unit} value={unit}>{unit}</option>
+              return <option key={unit.name} value={unit.value}>{unit.name}</option>
             })}
           </select>
         </div>
@@ -45,7 +34,7 @@ function App() {
             <p>{transferSpeed}</p>
             <select name="capacity-unit" id="capacity-unit" onChange={(e)=>setSpeedUnit(e.target.value)}>
               {speedUnits.map((unit)=>{
-                return <option key={unit} value={unit}>{unit}</option>
+                return <option key={unit.name} value={unit.value}>{unit.name}</option>
               })}
             </select>
           </div>
