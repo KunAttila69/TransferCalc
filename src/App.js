@@ -4,17 +4,14 @@ function App() {
   const [capacity, setCapacity] = useState()
   const [capacityUnit, setCapacityUnit] = useState(1)
   const [transferSpeed, setTransferSpeed] = useState()
-  const [speedUnit, setSpeedUnit] = useState(Math.pow(1000,0)/8)
+  const [speedUnit, setSpeedUnit] = useState(Math.pow(1000,-1)*8)
   const [time, setTime] = useState()
   
-  const capacityUnits = [{"name":"MegaByte","value":1},{"name":"GigaByte","value":Math.pow(1000,1)},{"name":"TeraByte","value":Math.pow(1000,2)}]
-  const speedUnits = [{"name":"mb/s","value":Math.pow(1000,0)/8},{"name":"KB/s","value":Math.pow(1000,-1)},{"name":"MB/s","value":1},{"name":"GB/s","value":Math.pow(1000,2)}]
+  const capacityUnits = [{"name":"MegaByte","value":1},{"name":"GigaByte","value":Math.pow(1000,-1)},{"name":"TeraByte","value":Math.pow(1000,-2)}]
+  const speedUnits = [{"name":"mb/s","value":Math.pow(1000,1)*8},{"name":"KB/s","value":Math.pow(1000,1)},{"name":"MB/s","value":1},{"name":"GB/s","value":Math.pow(1000,-1)}]
 
   const Calculate = () => {
-    console.log(capacityUnit)
-    console.log(speedUnit)
-    console.log(transferSpeed, speedUnit)
-    setTime((capacity*capacityUnit)/(transferSpeed*speedUnit))
+    setTime((capacity*capacityUnit)*(transferSpeed*speedUnit))
   }
 
   return (
@@ -34,7 +31,7 @@ function App() {
     
           <div className="slider-container">
             <input type="range" min="10" max="5000" defaultValue="50" className="slider" id="speedSlider" onChange={(e)=>setTransferSpeed(e.target.value)}/>
-            <p>{transferSpeed}</p>
+            <p>{transferSpeed ? transferSpeed : "10"}</p>
             <select name="capacity-unit" id="capacity-unit" onChange={(e)=>setSpeedUnit(e.target.value)}>
               {speedUnits.map((unit)=>{
                 return <option key={unit.name} value={unit.value}>{unit.name}</option>
